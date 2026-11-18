@@ -6,6 +6,7 @@ import SplitText from "./SplitText";
 // Section heading whose letters animate in once, when it scrolls into view.
 // It waits until the heading is on screen and only then starts the Split Text animation,
 // so it never depends on scroll positions measured earlier.
+// The bottom padding keeps letters like y, g and p from being clipped (Split Text hides overflow).
 export function HeadingText({ text }: { text: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [seen, setSeen] = useState(false);
@@ -33,9 +34,9 @@ export function HeadingText({ text }: { text: string }) {
   return (
     <span ref={ref} className="inline-block">
       {seen ? (
-        <SplitText text={text} tag="span" trigger="load" delay={45} duration={1.1} />
+        <SplitText text={text} tag="span" trigger="load" delay={45} duration={1.1} className="pb-[0.14em]" />
       ) : (
-        <span className="invisible">{text}</span>
+        <span className="invisible inline-block pb-[0.14em]">{text}</span>
       )}
     </span>
   );

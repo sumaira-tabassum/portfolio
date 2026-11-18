@@ -27,7 +27,7 @@ export const profile = {
 // Big numbers at the top of the About section. They count up from 0 when scrolled into view.
 export const highlights: { value: number; suffix?: string; label: string }[] = [
   { value: 100, suffix: "+", label: "automations built" },
-  { value: 3, label: "countries of clients" },
+  { value: 2, suffix: "+", label: "years building for clients" },
   { value: 5, label: "apps shipped live" },
 ];
 
