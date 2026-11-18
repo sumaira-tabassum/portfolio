@@ -1,0 +1,48 @@
+/*
+  THEME: every colour and font on the site comes from here.
+  To try a new look, change these values and save. Nothing else needs editing.
+  Current look: dark grid, coconut-white text, a set of soft colours (one per project/section).
+*/
+@theme {
+  /* Backgrounds */
+  --color-page: #141414;
+  --color-card: rgb(255 255 255 / 0.03);
+  --color-glass: rgb(255 255 255 / 0.07);
+  --color-line: rgb(255 255 255 / 0.12);
+
+  /* Text */
+  --color-ink: #f2f1ea; /* coconut white */
+  --color-body: #bdbcb4;
+  --color-muted: #8f8e88;
+
+  /* Main accent (links, buttons) */
+  --color-accent: #b28ab5;
+  --color-accent-hover: #cba7ce;
+  --color-accent-soft: rgb(178 138 181 / 0.16);
+  --color-on-accent: #141414;
+
+  /* The colour set: used for your name, section titles and project cards.
+     Picked on Khroma. The names are just slots; change the values freely.
+     Plum, red and teal are lighter versions of the picks (#59245a, #bd3b38, #2b887e)
+     so they stay readable on the dark background. */
+  --color-purple: #b28ab5; /* mauve */
+  --color-pink: #f59087; /* salmon */
+  --color-coral: #e0605c; /* red, lightened */
+  --color-orange: #fcc09d; /* peach */
+  --color-blue: #45b5a8; /* teal, lightened */
+  --color-green: #8cfb86; /* green */
+  --color-plum: #b066b2; /* plum, lightened */
+
+  /* Fonts (loaded in src/app/layout.tsx) */
+  --font-sans: var(--font-parkinsans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* Background effects (used in globals.css) */
+:root {
+  --bg-grid: rgb(255 255 255 / 0.045);
+  --bg-glow: rgb(178 138 181 / 0.1);
+
+  /* 3D icons: "none" = original colours. Use grayscale(1) for a silver look. */
+  --icon-filter: none;
+}

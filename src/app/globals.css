@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "../styles/theme.css";
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem; /* room for the sticky top bar */
+}
+
+/* Soft glow at the top + faint square grid, fixed so it stays while scrolling. */
+body {
+  background-color: var(--color-page);
+  background-image:
+    radial-gradient(ellipse 60% 45% at 50% 0%, var(--bg-glow), transparent 70%),
+    linear-gradient(var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 48px, 48px 48px;
+  background-attachment: fixed;
+  color: var(--color-body);
+  font-family: var(--font-sans);
+  color-scheme: dark;
+}
+
+/* Workflow diagram: moving dashes on the lines, and the floating "Click here" label. */
+@keyframes flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+/* Big name on the home page: one colour per letter (Split Text wraps each letter in .split-char). */
+.hero-name .split-char:nth-child(7n + 1) { color: var(--color-purple); }
+.hero-name .split-char:nth-child(7n + 2) { color: var(--color-pink); }
+.hero-name .split-char:nth-child(7n + 3) { color: var(--color-coral); }
+.hero-name .split-char:nth-child(7n + 4) { color: var(--color-orange); }
+.hero-name .split-char:nth-child(7n + 5) { color: var(--color-blue); }
+.hero-name .split-char:nth-child(7n + 6) { color: var(--color-green); }
+.hero-name .split-char:nth-child(7n + 7) { color: var(--color-plum); }
+
+/* Role under the tagline: one site colour per letter (all the same when a single colour is chosen). */
+.role-char:nth-child(7n + 1) { color: var(--color-purple); }
+.role-char:nth-child(7n + 2) { color: var(--color-pink); }
+.role-char:nth-child(7n + 3) { color: var(--color-coral); }
+.role-char:nth-child(7n + 4) { color: var(--color-orange); }
+.role-char:nth-child(7n + 5) { color: var(--color-blue); }
+.role-char:nth-child(7n + 6) { color: var(--color-green); }
+.role-char:nth-child(7n + 7) { color: var(--color-plum); }
+
+/* Name letters dropping in one by one (each letter gets its own delay). */
+@keyframes drop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-110%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(8%);
+  }
+  80% {
+    transform: translateY(-3%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.drop-letter {
+  display: inline-block;
+  animation: drop-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Typing cursor */
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Chat "typing" dots */
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+}
