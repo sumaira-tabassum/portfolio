@@ -31,6 +31,22 @@ export const highlights: { value: number; suffix?: string; label: string }[] = [
   { value: 5, label: "apps shipped live" },
 ];
 
+// "Why me" cards, shown after Projects and before Contact. Facts with proof, not praise.
+export const reasons: { title: string; text: string }[] = [
+  {
+    title: "Automation and code",
+    text: "When a no-code tool hits a limit, I write the missing piece myself, so a project doesn't stall waiting for a developer.",
+  },
+  {
+    title: "Tested before handover",
+    text: "Every workflow is checked against test scenarios before it goes live, so problems show up on my side, not yours.",
+  },
+  {
+    title: "Plain-language communication",
+    text: "My proposals and guides are written so non-technical clients can read them, understand them and approve them.",
+  },
+];
+
 export const about = [
   "I build automations for small businesses in the US, UK and Australia: lead capture, follow-ups, onboarding, and AI agents that answer enquiries and hand them to the team. So far that's **100+ automations** in **GoHighLevel** and **n8n**.",
   "I started as a web developer, building apps with **React, Next.js, React Native and Node**, and I still do. So when a no-code tool can't do something, I can write the missing piece myself.",
@@ -47,7 +63,7 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    period: "Jul 2026 – Present",
+    period: "Jun 2026 – Present",
     title: "Automation Engineer & Full-Stack Developer",
     company: "Freelance software consultancy · Lahore",
     summary:
@@ -55,8 +71,16 @@ export const experience: Experience[] = [
     tags: ["GoHighLevel", "n8n", "AI agents", "React Native", "PostgreSQL"],
   },
   {
-    period: "Apr – Jun 2026",
-    title: "Web Development Intern",
+    period: "Oct 2024 – Present",
+    title: "Web Developer & Documentation Specialist",
+    company: "Freelance · Part-time, project-based · Remote",
+    summary:
+      "Built and launched web projects for a UK-based client, including domain setup and deployment. Wrote and organised the client's official business documents, including policies, procedures and course timetables.",
+    tags: ["React", "Tailwind CSS", "Technical writing", "Documentation"],
+  },
+  {
+    period: "Mar – May 2026",
+    title: "Full-Stack Web Development Intern",
     company: "IT Dukes · Lahore",
     summary:
       "Built full-stack web apps with Next.js, TypeScript and MongoDB, with JWT login and role-based access. Deployed on AWS using Docker and Linux.",

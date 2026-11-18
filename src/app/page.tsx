@@ -11,7 +11,7 @@ import { StatsRow } from "@/components/StatsRow";
 import { Icon3D } from "@/components/Icon3D";
 import { ArrowUpRightIcon, GitHubIcon } from "@/components/Icons";
 import { accent } from "@/components/colors";
-import { about, experience, profile, projects, type Project } from "@/data/profile";
+import { about, experience, profile, projects, reasons, type Project } from "@/data/profile";
 
 function SectionTitle({
   id,
@@ -198,6 +198,23 @@ export default function Home() {
                 </li>
               ),
             )}
+          </ul>
+        </section>
+
+        {/* Why me: after the proof (experience, projects), right before Contact. */}
+        <section className="py-20">
+          <SectionTitle id="why-me" title="why me" subtitle="What working with me looks like." colorIndex={3} />
+          <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
+            {reasons.map((reason, i) => (
+              <li
+                key={reason.title}
+                className={`rounded-3xl border border-line bg-card p-7 backdrop-blur-sm transition-colors ${accent(i).hover}`}
+              >
+                <p className={`font-mono text-sm font-bold ${accent(i).text}`}>{String(i + 1).padStart(2, "0")}</p>
+                <h3 className="mt-3 text-xl font-bold text-ink">{reason.title}</h3>
+                <p className="mt-3 leading-relaxed">{reason.text}</p>
+              </li>
+            ))}
           </ul>
         </section>
 
