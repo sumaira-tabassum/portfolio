@@ -9,9 +9,10 @@ import { RichText } from "@/components/RichText";
 import { HeadingText } from "@/components/HeadingText";
 import { StatsRow } from "@/components/StatsRow";
 import { Icon3D } from "@/components/Icon3D";
-import { ArrowUpRightIcon, GitHubIcon } from "@/components/Icons";
+import { ArrowUpRightIcon } from "@/components/Icons";
+import { ProjectLinks, SmallProjectCard, StatusPill, Tags } from "@/components/ProjectCard";
 import { accent } from "@/components/colors";
-import { about, experience, profile, projects, reasons, type Project } from "@/data/profile";
+import { about, experience, profile, projects, reasons } from "@/data/profile";
 
 function SectionTitle({
   id,
@@ -31,59 +32,6 @@ function SectionTitle({
         <HeadingText text={title} />
       </h2>
       <p className="mt-3 text-lg text-body">{subtitle}</p>
-    </div>
-  );
-}
-
-function Tags({ tags }: { tags: string[] }) {
-  return (
-    <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools used">
-      {tags.map((tag) => (
-        <li
-          key={tag}
-          className="rounded-full border border-line px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-body"
-        >
-          {tag}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function StatusPill({ project, colorIndex }: { project: Project; colorIndex: number }) {
-  const label = project.status ?? (project.live ? "Live" : project.caseStudy ? "Case study" : "Client work");
-  const c = accent(colorIndex);
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider ${c.border} ${c.text}`}
-    >
-      <span className={`h-1.5 w-1.5 rounded-full ${c.bg}`} />
-      {label}
-    </span>
-  );
-}
-
-function ProjectLinks({ project }: { project: Project }) {
-  return (
-    <div className="mt-auto flex flex-wrap items-center gap-5 pt-6 text-sm font-semibold">
-      {project.caseStudy && (
-        <Link href={`/projects/${project.caseStudy}`} className="text-ink transition-colors hover:text-accent">
-          Read case study <span aria-hidden>→</span>
-        </Link>
-      )}
-      {project.live && (
-        <a href={project.live} className="flex items-center gap-1 text-ink transition-colors hover:text-accent">
-          Live site <ArrowUpRightIcon className="h-4 w-4" />
-        </a>
-      )}
-      {project.code && (
-        <a href={project.code} className="flex items-center gap-1.5 text-body transition-colors hover:text-ink">
-          <GitHubIcon className="h-4 w-4" /> Code
-        </a>
-      )}
-      {!project.live && !project.code && !project.caseStudy && (
-        <span className="font-normal text-muted">Case study coming soon</span>
-      )}
     </div>
   );
 }
@@ -185,22 +133,18 @@ export default function Home() {
                   </div>
                 </li>
               ) : (
-                <li
-                  key={project.title}
-                  className={`flex flex-col rounded-3xl border border-line bg-card p-7 backdrop-blur-sm transition-colors ${accent(i).hover}`}
-                >
-                  <div className="flex flex-wrap items-center gap-3">
-                    <StatusPill project={project} colorIndex={i} />
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-muted">{project.kind}</span>
-                  </div>
-                  <h3 className="mt-4 text-xl font-bold text-ink">{project.title}</h3>
-                  <p className="mt-2 leading-relaxed">{project.description}</p>
-                  <Tags tags={project.tags} />
-                  <ProjectLinks project={project} />
-                </li>
+                <SmallProjectCard key={project.title} project={project} colorIndex={i} />
               ),
             )}
           </ul>
+          <div className="mt-10 text-center">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-page transition-colors hover:bg-accent"
+            >
+              View all projects <span aria-hidden>→</span>
+            </Link>
+          </div>
         </section>
 
         {/* Why me: after the proof (experience, projects), right before Contact. */}

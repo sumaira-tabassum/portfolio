@@ -1,10 +1,10 @@
 import { profile } from "@/data/profile";
-import SplitText from "./SplitText";
+import { HeadingText } from "./HeadingText";
 import WarpText from "./WarpText";
 import { letterColors } from "./colors";
 
 // Which animation the big name uses. Change this one word to switch:
-//   "split" = React Bits Split Text (letters animate in one by one)
+//   "split" = React Bits Split Text (letters animate in one by one, again each time it comes back on screen)
 //   "warp"  = React Bits Warp Text (bends like glass around the mouse)
 const NAME_ANIMATION: "split" | "warp" = "split";
 
@@ -36,10 +36,8 @@ export function HeroName() {
       <h1 className="sr-only">{profile.name}</h1>
       {/* hero-name colours each letter (see globals.css). aria-hidden: the h1 above is the real heading. */}
       <div aria-hidden className="hero-name">
-        <SplitText
+        <HeadingText
           text={profile.handle}
-          tag="p"
-          trigger="load"
           delay={70}
           duration={1.25}
           className="font-extrabold leading-[1.05] tracking-[-0.04em] [font-size:clamp(4rem,min(17vw,24svh),11rem)]"

@@ -28,7 +28,7 @@ export const profile = {
 export const highlights: { value: number; suffix?: string; label: string }[] = [
   { value: 100, suffix: "+", label: "automations built" },
   { value: 2, suffix: "+", label: "years building for clients" },
-  { value: 5, label: "apps shipped live" },
+  { value: 6, label: "apps shipped live" },
 ];
 
 // "Why me" cards, shown after Projects and before Contact. Facts with proof, not praise.
@@ -48,7 +48,7 @@ export const reasons: { title: string; text: string }[] = [
 ];
 
 export const about = [
-  "I build automations for small businesses in the US, UK and Australia: lead capture, follow-ups, onboarding, and AI agents that answer enquiries and hand them to the team. So far that's **100+ automations** in **GoHighLevel** and **n8n**.",
+  "I build automations for clients based in the US, UK and Australia: lead capture, follow-ups, onboarding, and AI agents that answer enquiries and hand them to the team. So far that's **100+ automations** in **GoHighLevel**, **n8n**, **Zapier** and **ManyChat**.",
   "I started as a web developer, building apps with **React, Next.js, React Native and Node**, and I still do. So when a no-code tool can't do something, I can write the missing piece myself.",
   "I'm open to full-time roles, remote or in Lahore, and to freelance projects.",
 ];
@@ -65,26 +65,26 @@ export const experience: Experience[] = [
   {
     period: "Jun 2026 – Present",
     title: "Automation Engineer & Full-Stack Developer",
-    company: "Freelance software consultancy · Lahore",
+    company: "Freelance software consultancy · Full-time · On-site · Lahore",
     summary:
-      "Built and maintain 100+ automations in GoHighLevel, n8n, ManyChat, Zapier and CommentShark. Built AI agents that qualify leads and hand off to the team. Developed and tested web and mobile apps, and wrote plain-language proposals and guides for clients.",
-    tags: ["GoHighLevel", "n8n", "AI agents", "React Native", "PostgreSQL"],
+      "Built and maintain 100+ automations in GoHighLevel, n8n, ManyChat, Zapier and CommentShark. Built AI agents that qualify leads and hand off to the team. Developed and tested web and mobile apps, including no-code apps in WeWeb and Base44, and wrote plain-language proposals and guides for clients.",
+    tags: ["GoHighLevel", "n8n", "Zapier", "ManyChat", "AI Agents", "WeWeb", "Base44", "React Native", "PostgreSQL"],
   },
   {
     period: "Oct 2024 – Present",
     title: "Web Developer & Documentation Specialist",
-    company: "Freelance · Part-time, project-based · Remote",
+    company: "Freelance · Part-time · Remote",
     summary:
-      "Built and launched web projects for a UK-based client, including domain setup and deployment. Wrote and organised the client's official business documents, including policies, procedures and course timetables.",
-    tags: ["React", "Tailwind CSS", "Technical writing", "Documentation"],
+      "Part-time role alongside my studies and full-time work, with a long-term client based in the UK. Built and launched their web projects, from domain setup to deployment. Wrote and organised their official business documents, including policies, procedures and course timetables.",
+    tags: ["React", "Tailwind CSS", "Deployment", "Technical Writing", "Documentation"],
   },
   {
     period: "Mar – May 2026",
     title: "Full-Stack Web Development Intern",
-    company: "IT Dukes · Lahore",
+    company: "IT Dukes · Internship · On-site · Lahore",
     summary:
-      "Built full-stack web apps with Next.js, TypeScript and MongoDB, with JWT login and role-based access. Deployed on AWS using Docker and Linux.",
-    tags: ["Next.js", "TypeScript", "MongoDB", "AWS", "Docker"],
+      "Built full-stack web apps with Next.js, TypeScript and MongoDB, including an e-commerce app and a video-call dashboard using WebRTC. Added JWT login and role-based access. Deployed on AWS using Docker and Linux, and worked with Git workflows in a team.",
+    tags: ["Next.js", "TypeScript", "MongoDB", "AWS", "Docker", "Linux", "WebRTC"],
   },
 ];
 
@@ -98,6 +98,7 @@ export type Project = {
   caseStudy?: string; // slug from caseStudies.ts → links to /projects/<slug>
   // Featured projects get the big full-width card, with this 3D icon on the right.
   featured?: boolean;
+  badge?: boolean; // false hides the status badge
   icon?: "gear" | "stethoscope" | "robot" | "laptop" | "mobile_phone";
   status?: string;
 };
@@ -156,5 +157,27 @@ export const projects: Project[] = [
     tags: ["React", "Vite", "Tailwind CSS"],
     live: "https://1stnationwidesecurity.netlify.app",
     code: "https://github.com/sumaira-tabassum/1stnationwidesecurity",
+  },
+];
+
+// Extra projects shown only on the /projects page (not on the home page).
+export const extraProjects: Project[] = [
+  {
+    title: "Mind Mirror",
+    kind: "App",
+    description:
+      "My final year project. An AI tool that compares documents by meaning, not just matching words, and shows how similar they are.",
+    tags: ["React", "FastAPI", "Python", "Cohere"],
+    live: "https://mindmirror-ai-pk.vercel.app",
+    code: "https://github.com/sumaira-tabassum/MindMirror",
+  },
+  {
+    title: "E-commerce App",
+    kind: "App",
+    description:
+      "Full-stack e-commerce store built during my internship, containerised with Docker and set up for AWS deployment.",
+    tags: ["React", "Node.js", "MongoDB", "Docker"],
+    code: "https://github.com/sumaira-tabassum/ecommerce-react-app",
+    badge: false,
   },
 ];
