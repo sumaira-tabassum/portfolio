@@ -177,6 +177,7 @@ export const extraProjects: Project[] = [
     description:
       "Full-stack e-commerce store built during my internship, containerised with Docker and set up for AWS deployment.",
     tags: ["React", "Node.js", "MongoDB", "Docker"],
+    live: "https://ecommerce-react-app-pink-five.vercel.app",
     code: "https://github.com/sumaira-tabassum/ecommerce-react-app",
     badge: false,
   },
