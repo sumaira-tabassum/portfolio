@@ -87,16 +87,16 @@ export function ContactChat() {
   const inputOpen = stage === "name" || stage === "message";
 
   return (
-    <div className="mx-auto max-w-xl overflow-hidden rounded-3xl border border-line bg-card backdrop-blur-sm">
+    <div className="mx-auto max-w-xl overflow-hidden rounded-3xl bg-green text-page">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-line px-5 py-4">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-sm font-bold text-on-accent">
+      <div className="flex items-center gap-3 border-b border-page/15 px-5 py-4">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-page text-sm font-bold text-green">
           {profile.handle[0].toUpperCase()}
         </span>
         <div>
-          <p className="font-semibold text-ink">{firstName}&apos;s assistant</p>
-          <p className="flex items-center gap-1.5 text-xs text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-green" />
+          <p className="font-semibold text-page">{firstName}&apos;s assistant</p>
+          <p className="flex items-center gap-1.5 text-xs text-page/70">
+            <span className="h-1.5 w-1.5 rounded-full bg-page" />
             Usually replies within a day, by email
           </p>
         </div>
@@ -109,19 +109,19 @@ export function ContactChat() {
             key={i}
             className={`max-w-[85%] rounded-2xl px-4 py-2.5 leading-relaxed ${
               m.from === "bot"
-                ? "self-start rounded-bl-md bg-glass text-ink"
-                : "self-end rounded-br-md bg-accent text-on-accent"
+                ? "self-start rounded-bl-md bg-page/10 text-page"
+                : "self-end rounded-br-md bg-page text-ink"
             }`}
           >
             {m.text}
           </p>
         ))}
         {typing && (
-          <span className="flex gap-1 self-start rounded-2xl rounded-bl-md bg-glass px-4 py-3.5" aria-label="Typing">
+          <span className="flex gap-1 self-start rounded-2xl rounded-bl-md bg-page/10 px-4 py-3.5" aria-label="Typing">
             {[0, 1, 2].map((d) => (
               <span
                 key={d}
-                className="h-1.5 w-1.5 rounded-full bg-body"
+                className="h-1.5 w-1.5 rounded-full bg-page/60"
                 style={{ animation: `typing 1s ${d * 0.15}s infinite` }}
               />
             ))}
@@ -134,7 +134,7 @@ export function ContactChat() {
                 key={t}
                 type="button"
                 onClick={() => pickTopic(t)}
-                className="rounded-full border border-accent/50 px-4 py-2 text-sm text-accent transition-colors hover:bg-accent-soft"
+                className="rounded-full border border-page/40 px-4 py-2 text-sm text-page transition-colors hover:bg-page/10"
               >
                 {t}
               </button>
@@ -147,17 +147,17 @@ export function ContactChat() {
               href={gmail}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-ink px-5 py-2.5 text-sm font-bold text-page transition-colors hover:bg-accent"
+              className="rounded-full bg-page px-5 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-page/80"
             >
               Send with Gmail ↗
             </a>
-            <a href={mailto} className="rounded-full border border-line px-4 py-2.5 text-sm text-ink hover:border-accent">
+            <a href={mailto} className="rounded-full border border-page/30 px-4 py-2.5 text-sm text-page hover:border-page">
               Email app
             </a>
-            <button type="button" onClick={copy} className="rounded-full border border-line px-4 py-2.5 text-sm text-ink hover:border-accent">
+            <button type="button" onClick={copy} className="rounded-full border border-page/30 px-4 py-2.5 text-sm text-page hover:border-page">
               {copied ? "Copied" : "Copy message"}
             </button>
-            <button type="button" onClick={restart} className="text-sm text-muted hover:text-ink">
+            <button type="button" onClick={restart} className="text-sm text-page/70 hover:text-page">
               Start again
             </button>
           </div>
@@ -166,7 +166,7 @@ export function ContactChat() {
 
       {/* Input */}
       <form
-        className="flex items-end gap-2 border-t border-line p-3"
+        className="flex items-end gap-2 border-t border-page/15 p-3"
         onSubmit={(e) => {
           e.preventDefault();
           send();
@@ -191,12 +191,12 @@ export function ContactChat() {
           placeholder={
             stage === "name" ? "Your name" : stage === "message" ? "A few lines about it" : "Pick an option above"
           }
-          className="max-h-32 min-h-11 flex-1 resize-none rounded-2xl border border-line bg-transparent px-4 py-2.5 text-ink outline-none placeholder:text-muted focus:border-accent disabled:opacity-50"
+          className="max-h-32 min-h-11 flex-1 resize-none rounded-2xl border border-page/30 bg-transparent px-4 py-2.5 text-page outline-none placeholder:text-page/60 focus:border-page disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={!inputOpen || !draft.trim()}
-          className="h-11 rounded-full bg-accent px-5 text-sm font-bold text-on-accent transition-colors hover:bg-accent-hover disabled:opacity-40"
+          className="h-11 rounded-full bg-page px-5 text-sm font-bold text-green transition-colors hover:bg-page/80 disabled:opacity-40"
         >
           Send
         </button>

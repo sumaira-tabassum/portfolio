@@ -7,6 +7,13 @@ import Particles from "./Particles";
 
 const CELL = 48; // same grid size as the site background
 const FALLBACK = ["#b28ab5", "#f59087", "#e0605c", "#fcc09d", "#45b5a8", "#8cfb86", "#b066b2"];
+// The same 7 colours in light mode (keep in sync with html[data-theme="light"] in theme.css).
+const FALLBACK_LIGHT = ["#8a5e8e", "#cf6559", "#c23c38", "#c9773f", "#1f8a7e", "#2f9e3b", "#8f3f92"];
+
+// Grid and line colour (as "r,g,b"): white on the dark page, black on the light one.
+// Set by BackgroundLab on every render, before the backgrounds below draw.
+let inkRgb = "255,255,255";
+const ink = () => inkRgb;
 
 function siteColors() {
   const css = getComputedStyle(document.documentElement);
@@ -112,7 +119,7 @@ function DataPulses({ gridLines = true }: { gridLines?: boolean }) {
 }
 
 function drawGridLines(ctx: CanvasRenderingContext2D, w: number, h: number, alpha: number) {
-  ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+  ctx.strokeStyle = `rgba(${ink()},${alpha})`;
   ctx.lineWidth = 1;
   ctx.beginPath();
   for (let x = 0.5; x < w; x += CELL) {
@@ -128,7 +135,7 @@ function drawGridLines(ctx: CanvasRenderingContext2D, w: number, h: number, alph
 
 // Plus-sign pattern (a small + at every grid crossing), at a given brightness.
 const plusPattern = (alpha: number) => {
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${CELL}' height='${CELL}'><path d='M24 19v10M19 24h10' stroke='rgba(255,255,255,${alpha})' stroke-width='1.2' stroke-linecap='round'/></svg>`;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${CELL}' height='${CELL}'><path d='M24 19v10M19 24h10' stroke='rgba(${ink()},${alpha})' stroke-width='1.2' stroke-linecap='round'/></svg>`;
   return {
     backgroundImage: `url("data:image/svg+xml,${encodeURIComponent(svg)}")`,
     backgroundSize: `${CELL}px ${CELL}px`,
@@ -148,7 +155,7 @@ function Spotlight({ pattern = "lines" }: { pattern?: "lines" | "plus" }) {
     return () => window.removeEventListener("pointermove", move);
   }, []);
   const lines = (a: number) => ({
-    backgroundImage: `linear-gradient(rgba(255,255,255,${a}) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,${a}) 1px, transparent 1px)`,
+    backgroundImage: `linear-gradient(rgba(${ink()},${a}) 1px, transparent 1px), linear-gradient(90deg, rgba(${ink()},${a}) 1px, transparent 1px)`,
     backgroundSize: `${CELL}px ${CELL}px`,
   });
   // Plus marks stay visible everywhere (dim), and light up near the mouse.
@@ -198,10 +205,10 @@ function WorkflowLines() {
         </filter>
       </defs>
       {flowPaths.map((d, i) => (
-        <path key={i} id={`flow-${i}`} d={d} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="6 8" />
+        <path key={i} id={`flow-${i}`} d={d} fill="none" stroke={`rgba(${ink()},0.08)`} strokeWidth="1.5" strokeDasharray="6 8" />
       ))}
       {flowNodes.map(([x, y], i) => (
-        <rect key={i} x={x - 9} y={y - 9} width="18" height="18" rx="5" fill="#141414" stroke="rgba(255,255,255,0.14)" />
+        <rect key={i} x={x - 9} y={y - 9} width="18" height="18" rx="5" style={{ fill: "var(--color-page)" }} stroke={`rgba(${ink()},0.14)`} />
       ))}
       {flowPaths.map((_, i) => (
         <g key={i}>
@@ -262,9 +269,9 @@ const COLOR_KEY = "site-color";
 const COLOR_VARS = ["purple", "pink", "coral", "orange", "blue", "green", "plum"];
 
 // colour = -1 keeps the multicolour look; 0-6 paints the whole site in that one colour.
-function applyColor(index: number) {
+function applyColor(index: number, light: boolean) {
   const root = document.documentElement.style;
-  const one = FALLBACK[index];
+  const one = (light ? FALLBACK_LIGHT : FALLBACK)[index];
   for (const name of COLOR_VARS) {
     if (one) root.setProperty(`--color-${name}`, one);
     else root.removeProperty(`--color-${name}`);
@@ -284,7 +291,9 @@ export function BackgroundLab() {
   const [pick, setPick] = useState(0);
   const [color, setColor] = useState(-1);
   const [open, setOpen] = useState(false);
+  const [light, setLight] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  inkRgb = light ? "0,0,0" : "255,255,255";
 
   useEffect(() => {
     try {
@@ -292,14 +301,30 @@ export function BackgroundLab() {
       if (bg > 0 && bg < options.length) setPick(bg);
       const saved = localStorage.getItem(COLOR_KEY);
       const c = saved === null ? -1 : Number(saved);
-      if (c >= 0 && c < FALLBACK.length) {
-        applyColor(c);
-        setColor(c);
-      }
+      if (c >= 0 && c < FALLBACK.length) setColor(c);
     } catch {
       // storage blocked: keep the defaults
     }
   }, []);
+
+  // Follow the light/dark switch in the top bar.
+  useEffect(() => {
+    const html = document.documentElement;
+    const read = () => setLight(html.dataset.theme === "light");
+    read();
+    const watch = new MutationObserver(read);
+    watch.observe(html, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => watch.disconnect();
+  }, []);
+
+  // Paint the chosen single colour (its light or dark version). Done during render, not in an effect,
+  // so the remounted backgrounds below already read the new colours when they start.
+  const applied = useRef("");
+  const look = `${color}-${light}`;
+  if (typeof document !== "undefined" && applied.current !== look) {
+    applyColor(color, light);
+    applied.current = look;
+  }
 
   // Close on Esc or a click outside the panel.
   useEffect(() => {
@@ -328,7 +353,6 @@ export function BackgroundLab() {
     save(BG_KEY, i);
   };
   const chooseColor = (i: number) => {
-    applyColor(i);
     setColor(i);
     save(COLOR_KEY, i);
   };
@@ -338,8 +362,8 @@ export function BackgroundLab() {
   return (
     <>
       {/* Sits behind all content and covers the plain grid from globals.css.
-          The key remounts it when the colour changes, so the animations pick up the new colour. */}
-      <div key={color} aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-page">
+          The key remounts it when the colour or light/dark changes, so the animations pick up the new colours. */}
+      <div key={`${color}-${light}`} aria-hidden className="pointer-events-none fixed inset-0 -z-10 bg-page">
         {options[pick].el}
       </div>
 

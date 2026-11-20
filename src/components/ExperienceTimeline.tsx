@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Experience } from "@/data/profile";
-import { accent } from "./colors";
+import { accent, sectionColor } from "./colors";
 
 // Jobs on a vertical line that draws itself as you scroll down.
 // Each job's dot lights up once the line reaches it.
@@ -49,12 +49,12 @@ export function ExperienceTimeline({ jobs }: { jobs: Experience[] }) {
       <span aria-hidden className="absolute bottom-0 left-[11px] top-2 w-0.5 rounded-full bg-line sm:left-[19px]" />
       <span
         aria-hidden
-        className="absolute left-[11px] top-2 w-0.5 origin-top rounded-full bg-linear-to-b from-purple via-pink to-orange sm:left-[19px]"
+        className="absolute left-[11px] top-2 w-0.5 origin-top rounded-full bg-pink sm:left-[19px]"
         style={{ height: "calc(100% - 0.5rem)", transform: `scaleY(${progress})` }}
       />
 
       {jobs.map((job, i) => {
-        const c = accent(i + 1);
+        const c = accent(sectionColor.experience);
         const on = lit[i];
         return (
           <li key={job.title} className="relative">
@@ -84,7 +84,7 @@ export function ExperienceTimeline({ jobs }: { jobs: Experience[] }) {
                 {job.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="rounded-full border border-line px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-body"
+                    className={`rounded-full border px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-ink ${c.border}`}
                   >
                     {tag}
                   </li>

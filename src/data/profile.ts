@@ -5,8 +5,6 @@ export const profile = {
   name: "Sumaira Tabassum",
   // The big coloured word at the top of the page and in the top bar.
   handle: "sumaira",
-  // Small facts shown in the top bar.
-  stats: ["100+ automations", "US · UK · AU clients", "Lahore"],
   role: "Automation Engineer & Full-Stack Developer",
   // The two roles that take turns on the home page.
   roles: ["Automation Engineer", "Full-Stack Developer"],
@@ -20,7 +18,7 @@ export const profile = {
   resume: "/resume.pdf",
   // Your number in international format, no spaces or +, e.g. "923001234567".
   // Fill one or both to show the icon. Empty = hidden.
-  whatsapp: "",
+  whatsapp: "923202469684", // digits only, used in wa.me links
   phone: "",
 };
 
@@ -96,14 +94,17 @@ export type Project = {
   live?: string;
   code?: string;
   caseStudy?: string; // slug from caseStudies.ts → links to /projects/<slug>
-  // Featured projects get the big full-width card, with this 3D icon on the right.
-  featured?: boolean;
+  featured?: boolean; // featured projects get the wide, full-row card on the home page
+
   badge?: boolean; // false hides the status badge
   icon?: "gear" | "stethoscope" | "robot" | "laptop" | "mobile_phone";
   status?: string;
+  // Screenshot at the top of the card, e.g. "/projects/webrtc.png" (file in public/projects/).
+  // Without one, the card shows the 3D icon instead.
+  image?: string;
 };
 
-// Order matters: big card, two small cards, big card, two small cards.
+// Order matters: wide card, two cards, wide card, two cards.
 
 export const projects: Project[] = [
   {
@@ -123,6 +124,7 @@ export const projects: Project[] = [
     description:
       "About 30 GoHighLevel workflows covering two full customer journeys for a US trucking and real-estate investment business, plus comment-to-lead automation on Instagram, TikTok and YouTube.",
     tags: ["GoHighLevel", "ManyChat", "CommentShark"],
+    caseStudy: "client-onboarding", // case study page not written yet
   },
   {
     title: "AI Support Agent with RAG",
@@ -130,6 +132,7 @@ export const projects: Project[] = [
     description:
       "A self-hosted n8n agent that answers from company documents, remembers the conversation and escalates to Slack. Extended into a 41-node sales workflow with lead scoring and PDF quotes.",
     tags: ["n8n", "RAG", "Groq", "Docker"],
+    caseStudy: "ai-support-agent", // case study page not written yet
   },
   {
     title: "Health Tracking Platform",
@@ -139,6 +142,7 @@ export const projects: Project[] = [
     tags: ["React", "React Native", "Node.js", "PostgreSQL"],
     featured: true,
     icon: "stethoscope",
+    caseStudy: "health-tracking", // case study page not written yet
   },
   {
     title: "WebRTC Video Dashboard",
@@ -147,6 +151,7 @@ export const projects: Project[] = [
       "Video calls for up to 6 people with guest join links, roles and live notifications. Signalling runs on Supabase Realtime.",
     tags: ["Next.js", "TypeScript", "Supabase", "WebRTC"],
     live: "https://webrtc-dashboard-one.vercel.app",
+    image: "/projects/webrtc-dashboard.png", // not added yet: the card shows the 3D icon until it is
     code: "https://github.com/sumaira-tabassum/webrtc-dashboard",
   },
   {
@@ -156,6 +161,7 @@ export const projects: Project[] = [
       "Responsive multi-page website for a UK security company's SIA Door Supervisor courses, with a hero slider, course pages and a contact form.",
     tags: ["React", "Vite", "Tailwind CSS"],
     live: "https://1stnationwidesecurity.netlify.app",
+    image: "/projects/1st-nationwide-security.png",
     code: "https://github.com/sumaira-tabassum/1stnationwidesecurity",
   },
 ];
@@ -169,6 +175,7 @@ export const extraProjects: Project[] = [
       "My final year project. An AI tool that compares documents by meaning, not just matching words, and shows how similar they are.",
     tags: ["React", "FastAPI", "Python", "Cohere"],
     live: "https://mindmirror-ai-pk.vercel.app",
+    image: "/projects/mindmirror-ai.png",
     code: "https://github.com/sumaira-tabassum/MindMirror",
   },
   {
@@ -178,7 +185,7 @@ export const extraProjects: Project[] = [
       "Full-stack e-commerce store built during my internship, containerised with Docker and set up for AWS deployment.",
     tags: ["React", "Node.js", "MongoDB", "Docker"],
     live: "https://ecommerce-react-app-pink-five.vercel.app",
+    image: "/projects/ecommerce.png",
     code: "https://github.com/sumaira-tabassum/ecommerce-react-app",
-    badge: false,
   },
 ];

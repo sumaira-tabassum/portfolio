@@ -25,7 +25,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // suppressHydrationWarning: the script below may add data-theme="light" before React loads.
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Applies a saved light-mode choice before the page paints, so it doesn't flash dark first. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}`,
+          }}
+        />
+      </head>
       <body className={`${parkinsans.variable} ${geistMono.variable} antialiased`}>
         <BackgroundLab />
         {children}

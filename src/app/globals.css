@@ -19,6 +19,9 @@ body {
   font-family: var(--font-sans);
   color-scheme: dark;
 }
+html[data-theme="light"] body {
+  color-scheme: light;
+}
 
 /* Workflow diagram: moving dashes on the lines, and the floating "Click here" label. */
 @keyframes flow {

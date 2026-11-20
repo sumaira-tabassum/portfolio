@@ -8,10 +8,9 @@ import { HeroRole } from "@/components/HeroRole";
 import { RichText } from "@/components/RichText";
 import { HeadingText } from "@/components/HeadingText";
 import { StatsRow } from "@/components/StatsRow";
-import { Icon3D } from "@/components/Icon3D";
 import { ArrowUpRightIcon } from "@/components/Icons";
-import { ProjectLinks, SmallProjectCard, StatusPill, Tags } from "@/components/ProjectCard";
-import { accent } from "@/components/colors";
+import { ProjectCard } from "@/components/ProjectCard";
+import { accent, projectColor, sectionColor } from "@/components/colors";
 import { about, experience, profile, projects, reasons } from "@/data/profile";
 
 function SectionTitle({
@@ -67,13 +66,13 @@ export default function Home() {
           </div>
           {/* Phones and tablets: the top bar hides its links there, so show them here. */}
           <nav aria-label="Sections" className="mt-6 flex flex-wrap justify-center gap-2 md:hidden">
-            {["about", "experience", "projects", "contact"].map((id) => (
+            {["about", "experience", "projects", "why-me", "contact"].map((id) => (
               <a
                 key={id}
                 href={`#${id}`}
                 className="rounded-full border border-line px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink"
               >
-                {id}
+                {id.replace("-", " ")}
               </a>
             ))}
           </nav>
@@ -81,7 +80,7 @@ export default function Home() {
 
         {/* About */}
         <section className="py-20">
-          <SectionTitle id="about" title="about me" subtitle="Automation first, developer always." colorIndex={0} />
+          <SectionTitle id="about" title="about me" subtitle="Automation first, developer always." colorIndex={sectionColor.about} />
           <StatsRow />
           <div className="mx-auto flex max-w-2xl flex-col gap-5 text-lg leading-relaxed">
             {about.map((paragraph) => (
@@ -95,7 +94,7 @@ export default function Home() {
               href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-page transition-colors hover:bg-accent"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-page transition-colors hover:bg-purple"
             >
               View resume <ArrowUpRightIcon className="h-4 w-4" />
             </a>
@@ -104,43 +103,28 @@ export default function Home() {
 
         {/* Experience */}
         <section className="py-20">
-          <SectionTitle id="experience" title="experience" subtitle="Where I've built things so far." colorIndex={1} />
+          <SectionTitle id="experience" title="experience" subtitle="Where I've built things so far." colorIndex={sectionColor.experience} />
           <ExperienceTimeline jobs={experience} />
         </section>
 
         {/* Projects */}
         <section className="py-20">
-          <SectionTitle id="projects" title="selected work" subtitle="Automations and apps I've built for real businesses." colorIndex={2} />
+          <SectionTitle id="projects" title="selected work" subtitle="Automations and apps I've built for real businesses." colorIndex={sectionColor.automations} />
+          {/* Featured projects take a full row; the rest sit two per row. */}
           <ul className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {projects.map((project, i) =>
-              project.featured ? (
-                <li
-                  key={project.title}
-                  className={`grid gap-8 rounded-3xl border border-line bg-card p-8 backdrop-blur-sm transition-colors md:col-span-2 md:grid-cols-[1.2fr_1fr] ${accent(i).hover}`}
-                >
-                  <div className="flex flex-col">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <StatusPill project={project} colorIndex={i} />
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-muted">{project.kind}</span>
-                    </div>
-                    <h3 className="mt-4 text-3xl font-extrabold tracking-tight text-ink">{project.title}</h3>
-                    <p className="mt-3 text-lg leading-relaxed">{project.description}</p>
-                    <Tags tags={project.tags} />
-                    <ProjectLinks project={project} />
-                  </div>
-                  <div className="flex min-h-56 items-center justify-center rounded-2xl border border-line bg-[radial-gradient(circle_at_center,var(--bg-glow),transparent_70%)]">
-                    {project.icon && <Icon3D name={project.icon} size={150} />}
-                  </div>
-                </li>
-              ) : (
-                <SmallProjectCard key={project.title} project={project} colorIndex={i} />
-              ),
-            )}
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                colorIndex={projectColor(project.kind)}
+                wide={project.featured}
+              />
+            ))}
           </ul>
           <div className="mt-10 text-center">
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-page transition-colors hover:bg-accent"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-bold text-page transition-colors hover:bg-orange"
             >
               View all projects <span aria-hidden>→</span>
             </Link>
@@ -149,14 +133,14 @@ export default function Home() {
 
         {/* Why me: after the proof (experience, projects), right before Contact. */}
         <section className="py-20">
-          <SectionTitle id="why-me" title="why me" subtitle="What working with me looks like." colorIndex={3} />
+          <SectionTitle id="why-me" title="why me" subtitle="What working with me looks like." colorIndex={sectionColor.whyMe} />
           <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-3">
             {reasons.map((reason, i) => (
               <li
                 key={reason.title}
-                className={`rounded-3xl border border-line bg-card p-7 backdrop-blur-sm transition-colors ${accent(i).hover}`}
+                className={`rounded-3xl border border-line bg-card p-7 backdrop-blur-sm transition-colors ${accent(sectionColor.whyMe).hover}`}
               >
-                <p className={`font-mono text-sm font-bold ${accent(i).text}`}>{String(i + 1).padStart(2, "0")}</p>
+                <p className={`font-mono text-sm font-bold ${accent(sectionColor.whyMe).text}`}>{String(i + 1).padStart(2, "0")}</p>
                 <h3 className="mt-3 text-xl font-bold text-ink">{reason.title}</h3>
                 <p className="mt-3 leading-relaxed">{reason.text}</p>
               </li>
@@ -166,12 +150,12 @@ export default function Home() {
 
         {/* Contact */}
         <section className="py-20">
-          <SectionTitle id="contact" title="say hello" subtitle="Tell me what you're working on." colorIndex={4} />
+          <SectionTitle id="contact" title="say hello" subtitle="Tell me what you're working on." colorIndex={sectionColor.contact} />
           <ContactChat />
         </section>
 
         <footer className="border-t border-line py-10 text-center font-mono text-xs uppercase tracking-wider text-muted">
-          Built with Next.js and Tailwind CSS · Set in Parkinsans and Geist Mono · {profile.location}
+          © {new Date().getFullYear()} {profile.name} · {profile.location}
         </footer>
       </main>
     </>
